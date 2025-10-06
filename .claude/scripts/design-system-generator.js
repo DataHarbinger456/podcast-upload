@@ -316,7 +316,7 @@ function generateDesignSystem(params) {
 
   // Get theme data
   let theme;
-  if (theme_choice === 'custom' && custom_colors) {
+  if (theme_choice === "custom" && custom_colors) {
     theme = {
       name: "Custom Brand Colors",
       primary: { color: custom_colors.primary, name: "brand primary" },
@@ -352,139 +352,139 @@ function generateDesignSystem(params) {
 
   // Read template - try multiple possible paths
   const templatePaths = [
-    path.join(__dirname, '..', '..', 'DESIGN_SYSTEM_TEMPLATE.md'), // From .claude/scripts
-    path.join(process.cwd(), 'DESIGN_SYSTEM_TEMPLATE.md'), // From project root
-    path.join(process.cwd(), 'nextjs-queen', 'template', 'DESIGN_SYSTEM_TEMPLATE.md') // From repo root
+    path.join(__dirname, "..", "..", "DESIGN_SYSTEM_TEMPLATE.md"), // From .claude/scripts
+    path.join(process.cwd(), "DESIGN_SYSTEM_TEMPLATE.md"), // From project root
+    path.join(process.cwd(), "nextjs-queen", "template", "DESIGN_SYSTEM_TEMPLATE.md") // From repo root
   ];
 
   let template;
   for (const templatePath of templatePaths) {
     if (fs.existsSync(templatePath)) {
-      template = fs.readFileSync(templatePath, 'utf8');
+      template = fs.readFileSync(templatePath, "utf8");
       break;
     }
   }
 
   if (!template) {
-    throw new Error(`DESIGN_SYSTEM_TEMPLATE.md not found in any of: ${templatePaths.join(', ')}`);
+    throw new Error(`DESIGN_SYSTEM_TEMPLATE.md not found in any of: ${templatePaths.join(", ")}`);
   }
 
   // Replace all template variables
   const replacements = {
     // Theme variables
-    '{{THEME_NAME}}': theme.name,
-    '{{PRIMARY_COLOR}}': theme.primary.color,
-    '{{PRIMARY_NAME}}': theme.primary.name,
-    '{{SUCCESS_COLOR}}': theme.success.color,
-    '{{SUCCESS_NAME}}': theme.success.name,
-    '{{ERROR_COLOR}}': theme.error.color,
-    '{{ERROR_NAME}}': theme.error.name,
-    '{{WARNING_COLOR}}': theme.warning.color,
-    '{{WARNING_NAME}}': theme.warning.name,
-    '{{BACKGROUND_COLOR}}': theme.background.color,
-    '{{BACKGROUND_NAME}}': theme.background.name,
-    '{{SURFACE_COLOR}}': theme.surface.color,
-    '{{SURFACE_NAME}}': theme.surface.name,
-    '{{TEXT_PRIMARY_COLOR}}': theme.textPrimary.color,
-    '{{TEXT_PRIMARY_NAME}}': theme.textPrimary.name,
-    '{{TEXT_SECONDARY_COLOR}}': theme.textSecondary.color,
-    '{{TEXT_SECONDARY_NAME}}': theme.textSecondary.name,
+    "{{THEME_NAME}}": theme.name,
+    "{{PRIMARY_COLOR}}": theme.primary.color,
+    "{{PRIMARY_NAME}}": theme.primary.name,
+    "{{SUCCESS_COLOR}}": theme.success.color,
+    "{{SUCCESS_NAME}}": theme.success.name,
+    "{{ERROR_COLOR}}": theme.error.color,
+    "{{ERROR_NAME}}": theme.error.name,
+    "{{WARNING_COLOR}}": theme.warning.color,
+    "{{WARNING_NAME}}": theme.warning.name,
+    "{{BACKGROUND_COLOR}}": theme.background.color,
+    "{{BACKGROUND_NAME}}": theme.background.name,
+    "{{SURFACE_COLOR}}": theme.surface.color,
+    "{{SURFACE_NAME}}": theme.surface.name,
+    "{{TEXT_PRIMARY_COLOR}}": theme.textPrimary.color,
+    "{{TEXT_PRIMARY_NAME}}": theme.textPrimary.name,
+    "{{TEXT_SECONDARY_COLOR}}": theme.textSecondary.color,
+    "{{TEXT_SECONDARY_NAME}}": theme.textSecondary.name,
 
     // OKLCH palette variables (light mode)
-    '{{BACKGROUND_OKLCH}}': shadcnPalette.light.background,
-    '{{FOREGROUND_OKLCH}}': shadcnPalette.light.foreground,
-    '{{CARD_OKLCH}}': shadcnPalette.light.card,
-    '{{CARD_FOREGROUND_OKLCH}}': shadcnPalette.light.cardForeground,
-    '{{POPOVER_OKLCH}}': shadcnPalette.light.popover,
-    '{{POPOVER_FOREGROUND_OKLCH}}': shadcnPalette.light.popoverForeground,
-    '{{PRIMARY_OKLCH}}': shadcnPalette.light.primary,
-    '{{PRIMARY_FOREGROUND_OKLCH}}': shadcnPalette.light.primaryForeground,
-    '{{SECONDARY_OKLCH}}': shadcnPalette.light.secondary,
-    '{{SECONDARY_FOREGROUND_OKLCH}}': shadcnPalette.light.secondaryForeground,
-    '{{MUTED_OKLCH}}': shadcnPalette.light.muted,
-    '{{MUTED_FOREGROUND_OKLCH}}': shadcnPalette.light.mutedForeground,
-    '{{ACCENT_OKLCH}}': shadcnPalette.light.accent,
-    '{{ACCENT_FOREGROUND_OKLCH}}': shadcnPalette.light.accentForeground,
-    '{{DESTRUCTIVE_OKLCH}}': shadcnPalette.light.destructive,
-    '{{DESTRUCTIVE_FOREGROUND_OKLCH}}': shadcnPalette.light.destructiveForeground,
-    '{{BORDER_OKLCH}}': shadcnPalette.light.border,
-    '{{INPUT_OKLCH}}': shadcnPalette.light.input,
-    '{{RING_OKLCH}}': shadcnPalette.light.ring,
-    '{{SUCCESS_OKLCH}}': shadcnPalette.light.success,
-    '{{WARNING_OKLCH}}': shadcnPalette.light.warning,
-    '{{SURFACE_OKLCH}}': shadcnPalette.light.surfaceColor,
-    '{{TEXT_PRIMARY_OKLCH}}': shadcnPalette.light.textPrimaryColor,
-    '{{TEXT_SECONDARY_OKLCH}}': shadcnPalette.light.textSecondaryColor,
+    "{{BACKGROUND_OKLCH}}": shadcnPalette.light.background,
+    "{{FOREGROUND_OKLCH}}": shadcnPalette.light.foreground,
+    "{{CARD_OKLCH}}": shadcnPalette.light.card,
+    "{{CARD_FOREGROUND_OKLCH}}": shadcnPalette.light.cardForeground,
+    "{{POPOVER_OKLCH}}": shadcnPalette.light.popover,
+    "{{POPOVER_FOREGROUND_OKLCH}}": shadcnPalette.light.popoverForeground,
+    "{{PRIMARY_OKLCH}}": shadcnPalette.light.primary,
+    "{{PRIMARY_FOREGROUND_OKLCH}}": shadcnPalette.light.primaryForeground,
+    "{{SECONDARY_OKLCH}}": shadcnPalette.light.secondary,
+    "{{SECONDARY_FOREGROUND_OKLCH}}": shadcnPalette.light.secondaryForeground,
+    "{{MUTED_OKLCH}}": shadcnPalette.light.muted,
+    "{{MUTED_FOREGROUND_OKLCH}}": shadcnPalette.light.mutedForeground,
+    "{{ACCENT_OKLCH}}": shadcnPalette.light.accent,
+    "{{ACCENT_FOREGROUND_OKLCH}}": shadcnPalette.light.accentForeground,
+    "{{DESTRUCTIVE_OKLCH}}": shadcnPalette.light.destructive,
+    "{{DESTRUCTIVE_FOREGROUND_OKLCH}}": shadcnPalette.light.destructiveForeground,
+    "{{BORDER_OKLCH}}": shadcnPalette.light.border,
+    "{{INPUT_OKLCH}}": shadcnPalette.light.input,
+    "{{RING_OKLCH}}": shadcnPalette.light.ring,
+    "{{SUCCESS_OKLCH}}": shadcnPalette.light.success,
+    "{{WARNING_OKLCH}}": shadcnPalette.light.warning,
+    "{{SURFACE_OKLCH}}": shadcnPalette.light.surfaceColor,
+    "{{TEXT_PRIMARY_OKLCH}}": shadcnPalette.light.textPrimaryColor,
+    "{{TEXT_SECONDARY_OKLCH}}": shadcnPalette.light.textSecondaryColor,
 
     // OKLCH palette variables (dark mode)
-    '{{BACKGROUND_DARK_OKLCH}}': shadcnPalette.dark.background,
-    '{{FOREGROUND_DARK_OKLCH}}': shadcnPalette.dark.foreground,
-    '{{CARD_DARK_OKLCH}}': shadcnPalette.dark.card,
-    '{{CARD_FOREGROUND_DARK_OKLCH}}': shadcnPalette.dark.cardForeground,
-    '{{POPOVER_DARK_OKLCH}}': shadcnPalette.dark.popover,
-    '{{POPOVER_FOREGROUND_DARK_OKLCH}}': shadcnPalette.dark.popoverForeground,
-    '{{PRIMARY_DARK_OKLCH}}': shadcnPalette.dark.primary,
-    '{{PRIMARY_FOREGROUND_DARK_OKLCH}}': shadcnPalette.dark.primaryForeground,
-    '{{SECONDARY_DARK_OKLCH}}': shadcnPalette.dark.secondary,
-    '{{SECONDARY_FOREGROUND_DARK_OKLCH}}': shadcnPalette.dark.secondaryForeground,
-    '{{MUTED_DARK_OKLCH}}': shadcnPalette.dark.muted,
-    '{{MUTED_FOREGROUND_DARK_OKLCH}}': shadcnPalette.dark.mutedForeground,
-    '{{ACCENT_DARK_OKLCH}}': shadcnPalette.dark.accent,
-    '{{ACCENT_FOREGROUND_DARK_OKLCH}}': shadcnPalette.dark.accentForeground,
-    '{{DESTRUCTIVE_DARK_OKLCH}}': shadcnPalette.dark.destructive,
-    '{{DESTRUCTIVE_FOREGROUND_DARK_OKLCH}}': shadcnPalette.dark.destructiveForeground,
-    '{{BORDER_DARK_OKLCH}}': shadcnPalette.dark.border,
-    '{{INPUT_DARK_OKLCH}}': shadcnPalette.dark.input,
-    '{{RING_DARK_OKLCH}}': shadcnPalette.dark.ring,
-    '{{SUCCESS_DARK_OKLCH}}': shadcnPalette.dark.success,
-    '{{WARNING_DARK_OKLCH}}': shadcnPalette.dark.warning,
-    '{{SURFACE_DARK_OKLCH}}': shadcnPalette.dark.surfaceColor,
-    '{{TEXT_PRIMARY_DARK_OKLCH}}': shadcnPalette.dark.textPrimaryColor,
-    '{{TEXT_SECONDARY_DARK_OKLCH}}': shadcnPalette.dark.textSecondaryColor,
+    "{{BACKGROUND_DARK_OKLCH}}": shadcnPalette.dark.background,
+    "{{FOREGROUND_DARK_OKLCH}}": shadcnPalette.dark.foreground,
+    "{{CARD_DARK_OKLCH}}": shadcnPalette.dark.card,
+    "{{CARD_FOREGROUND_DARK_OKLCH}}": shadcnPalette.dark.cardForeground,
+    "{{POPOVER_DARK_OKLCH}}": shadcnPalette.dark.popover,
+    "{{POPOVER_FOREGROUND_DARK_OKLCH}}": shadcnPalette.dark.popoverForeground,
+    "{{PRIMARY_DARK_OKLCH}}": shadcnPalette.dark.primary,
+    "{{PRIMARY_FOREGROUND_DARK_OKLCH}}": shadcnPalette.dark.primaryForeground,
+    "{{SECONDARY_DARK_OKLCH}}": shadcnPalette.dark.secondary,
+    "{{SECONDARY_FOREGROUND_DARK_OKLCH}}": shadcnPalette.dark.secondaryForeground,
+    "{{MUTED_DARK_OKLCH}}": shadcnPalette.dark.muted,
+    "{{MUTED_FOREGROUND_DARK_OKLCH}}": shadcnPalette.dark.mutedForeground,
+    "{{ACCENT_DARK_OKLCH}}": shadcnPalette.dark.accent,
+    "{{ACCENT_FOREGROUND_DARK_OKLCH}}": shadcnPalette.dark.accentForeground,
+    "{{DESTRUCTIVE_DARK_OKLCH}}": shadcnPalette.dark.destructive,
+    "{{DESTRUCTIVE_FOREGROUND_DARK_OKLCH}}": shadcnPalette.dark.destructiveForeground,
+    "{{BORDER_DARK_OKLCH}}": shadcnPalette.dark.border,
+    "{{INPUT_DARK_OKLCH}}": shadcnPalette.dark.input,
+    "{{RING_DARK_OKLCH}}": shadcnPalette.dark.ring,
+    "{{SUCCESS_DARK_OKLCH}}": shadcnPalette.dark.success,
+    "{{WARNING_DARK_OKLCH}}": shadcnPalette.dark.warning,
+    "{{SURFACE_DARK_OKLCH}}": shadcnPalette.dark.surfaceColor,
+    "{{TEXT_PRIMARY_DARK_OKLCH}}": shadcnPalette.dark.textPrimaryColor,
+    "{{TEXT_SECONDARY_DARK_OKLCH}}": shadcnPalette.dark.textSecondaryColor,
 
     // Font variables
-    '{{FONT_PAIRING_NAME}}': font.name,
-    '{{HEADING_FONT}}': font.heading.font,
-    '{{HEADING_WEIGHT}}': font.heading.weight,
-    '{{BODY_FONT}}': font.body.font,
-    '{{BODY_WEIGHT}}': font.body.weight,
-    '{{HEADING_FONT_URL}}': font.headingUrl,
-    '{{BODY_FONT_URL}}': font.bodyUrl,
+    "{{FONT_PAIRING_NAME}}": font.name,
+    "{{HEADING_FONT}}": font.heading.font,
+    "{{HEADING_WEIGHT}}": font.heading.weight,
+    "{{BODY_FONT}}": font.body.font,
+    "{{BODY_WEIGHT}}": font.body.weight,
+    "{{HEADING_FONT_URL}}": font.headingUrl,
+    "{{BODY_FONT_URL}}": font.bodyUrl,
 
     // Spacing variables
-    '{{SPACING_TYPE}}': spacing.name,
-    '{{BASE_UNIT}}': spacing.baseUnit.toString(),
-    '{{SPACING_SCALE}}': spacing.scale,
-    '{{SPACING_1}}': spacing.values.ds1,
-    '{{SPACING_2}}': spacing.values.ds2,
-    '{{SPACING_3}}': spacing.values.ds3,
-    '{{SPACING_4}}': spacing.values.ds4,
-    '{{SPACING_5}}': spacing.values.ds5,
-    '{{SPACING_6}}': spacing.values.ds6,
-    '{{COMPONENT_PADDING}}': spacing.componentPadding,
-    '{{SECTION_MARGIN}}': spacing.sectionMargin,
-    '{{CARD_SPACING}}': spacing.cardSpacing,
-    '{{BUTTON_PADDING}}': spacing.buttonPadding,
+    "{{SPACING_TYPE}}": spacing.name,
+    "{{BASE_UNIT}}": spacing.baseUnit.toString(),
+    "{{SPACING_SCALE}}": spacing.scale,
+    "{{SPACING_1}}": spacing.values.ds1,
+    "{{SPACING_2}}": spacing.values.ds2,
+    "{{SPACING_3}}": spacing.values.ds3,
+    "{{SPACING_4}}": spacing.values.ds4,
+    "{{SPACING_5}}": spacing.values.ds5,
+    "{{SPACING_6}}": spacing.values.ds6,
+    "{{COMPONENT_PADDING}}": spacing.componentPadding,
+    "{{SECTION_MARGIN}}": spacing.sectionMargin,
+    "{{CARD_SPACING}}": spacing.cardSpacing,
+    "{{BUTTON_PADDING}}": spacing.buttonPadding,
 
     // Radius variables
-    '{{RADIUS_SIZE}}': radius.name,
-    '{{RADIUS_SM}}': radius.sm.toString(),
-    '{{RADIUS_MD}}': radius.md.toString(),
-    '{{RADIUS_LG}}': radius.lg.toString(),
-    '{{RADIUS_REM}}': radius.rem.toString()
+    "{{RADIUS_SIZE}}": radius.name,
+    "{{RADIUS_SM}}": radius.sm.toString(),
+    "{{RADIUS_MD}}": radius.md.toString(),
+    "{{RADIUS_LG}}": radius.lg.toString(),
+    "{{RADIUS_REM}}": radius.rem.toString()
   };
 
   // Apply all replacements
   Object.entries(replacements).forEach(([placeholder, value]) => {
-    template = template.replace(new RegExp(placeholder, 'g'), value);
+    template = template.replace(new RegExp(placeholder, "g"), value);
   });
 
   return template;
 }
 
 // Export for MCP usage - compatible with VM sandbox
-if (typeof module !== 'undefined' && module && module.exports) {
+if (typeof module !== "undefined" && module && module.exports) {
   module.exports = { generateDesignSystem };
-} else if (typeof global !== 'undefined') {
+} else if (typeof global !== "undefined") {
   global.generateDesignSystem = generateDesignSystem;
 }

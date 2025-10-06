@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;  
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode variables */
+    --background: 241 5% 100%;
+    --foreground: 259 0% 23%;
+    --card: 241 5% 100%;
+    --card-foreground: 259 0% 23%;
+    --popover: 241 5% 100%;
+    --popover-foreground: 259 0% 23%;
+    --primary: 273 38% 60%;
+    --primary-foreground: 0 0% 14%;
+    --secondary: 251 6% 94%;
+    --secondary-foreground: 259 0% 23%;
+    --muted: 251 6% 96%;
+    --muted-foreground: 255 2% 65%;
+    --accent: 251 6% 92%;
+    --accent-foreground: 259 0% 23%;
+    --destructive: 46 14% 63%;
+    --destructive-foreground: 0 0% 14%;
+    --border: 251 6% 89%;
+    --input: 251 6% 89%;
+    --ring: 273 19% 60%;
+    --radius: 0.5rem;
+    
+    /* Additional shadcn variables */
+    --border: 251 6% 89%;
+    --input: 251 6% 89%;
+    --ring: 273 19% 60%;
+    --radius: 0.5rem;
+
+    /* Custom design system colors */
+    --success: 140 15% 60%;
+    --warning: 60 15% 70%;
+    --surface-color: 250 2% 98%;
+    --text-primary-color: 0 0% 10%;
+    --text-secondary-color: 250 2% 45%;
+
+    /* Rainbow button colors */
+    --color-1: 0 100% 63%;
+    --color-2: 270 100% 63%;
+    --color-3: 210 100% 63%;
+    --color-4: 195 100% 63%;
+    --color-5: 90 100% 63%;
+  }
+
+  .dark {
+    /* Dark mode variables - Black background, white and red theme */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 84% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 84% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 84% 60%;
+    --success: 140 60% 50%;
+    --warning: 45 100% 60%;
+    --surface-color: 0 0% 5%;
+    --text-primary-color: 0 0% 100%;
+    --text-secondary-color: 0 0% 70%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Auto dark mode - Black background, white and red theme */
+      --background: 0 0% 0%;
+      --foreground: 0 0% 100%;
+      --card: 0 0% 5%;
+      --card-foreground: 0 0% 100%;
+      --popover: 0 0% 5%;
+      --popover-foreground: 0 0% 100%;
+      --primary: 0 84% 60%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 0 0% 10%;
+      --secondary-foreground: 0 0% 100%;
+      --muted: 0 0% 10%;
+      --muted-foreground: 0 0% 70%;
+      --accent: 0 84% 60%;
+      --accent-foreground: 0 0% 100%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 0 0% 20%;
+      --input: 0 0% 20%;
+      --ring: 0 84% 60%;
+      --success: 140 60% 50%;
+      --warning: 45 100% 60%;
+      --surface-color: 0 0% 5%;
+      --text-primary-color: 0 0% 100%;
+      --text-secondary-color: 0 0% 70%;
+    }
+  }
+
+  /* Typography styles using design system fonts */
+  .font-heading {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Design system spacing utilities */
+  .ds-1 { width: 12px; height: 12px; }
+  .ds-2 { width: 24px; height: 24px; }
+  .ds-3 { width: 36px; height: 36px; }
+  .ds-4 { width: 48px; height: 48px; }
+  .ds-5 { width: 60px; height: 60px; }
+  .ds-6 { width: 72px; height: 72px; }
+  
+  .p-ds-1 { padding: 12px; }
+  .p-ds-2 { padding: 24px; }
+  .p-ds-3 { padding: 36px; }
+  .p-ds-4 { padding: 48px; }
+  .p-ds-5 { padding: 60px; }
+  .p-ds-6 { padding: 72px; }
+  
+  .m-ds-1 { margin: 12px; }
+  .m-ds-2 { margin: 24px; }
+  .m-ds-3 { margin: 36px; }
+  .m-ds-4 { margin: 48px; }
+  .m-ds-5 { margin: 60px; }
+  .m-ds-6 { margin: 72px; }
+
+  /* Animation and shadow styles from design system */
+  .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+  .shadow { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); }
+  .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); }
+  .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); }
+}

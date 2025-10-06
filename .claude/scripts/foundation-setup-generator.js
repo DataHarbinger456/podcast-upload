@@ -3,16 +3,16 @@
  * Reads DESIGN_SYSTEM.md and generates complete Next.js foundation setup
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+const fs = require("fs");
+const path = require("path");
+const { execSync } = require("child_process");
 
 function parseDesignSystem(designSystemContent) {
-  const lines = designSystemContent.split('\n');
+  const lines = designSystemContent.split("\n");
   
   // Extract theme name
-  const themeLine = lines.find(line => line.includes('Color Palette:'));
-  const themeName = themeLine ? themeLine.replace('## 🌈 Color Palette: ', '').trim() : 'Custom Theme';
+  const themeLine = lines.find(line => line.includes("Color Palette:"));
+  const themeName = themeLine ? themeLine.replace("## 🌈 Color Palette: ", "").trim() : "Custom Theme";
   
   // Extract colors (look for hex values)
   const colorPattern = /#[0-9A-Fa-f]{6}/g;
@@ -20,44 +20,44 @@ function parseDesignSystem(designSystemContent) {
   
   // Extract specific colors by looking for their labels
   const extractColor = (label) => {
-    const line = lines.find(line => line.includes(label) && line.includes('#'));
+    const line = lines.find(line => line.includes(label) && line.includes("#"));
     const match = line ? line.match(/#[0-9A-Fa-f]{6}/) : null;
-    return match ? match[0] : '#000000';
+    return match ? match[0] : "#000000";
   };
   
   const colors = {
-    primary: extractColor('**Primary:**'),
-    success: extractColor('**Success:**'),
-    error: extractColor('**Error:**'),
-    warning: extractColor('**Warning:**'),
-    background: extractColor('**Background:**'),
-    surface: extractColor('**Surface:**'),
-    textPrimary: extractColor('**Primary Text:**'),
-    textSecondary: extractColor('**Secondary Text:**')
+    primary: extractColor("**Primary:**"),
+    success: extractColor("**Success:**"),
+    error: extractColor("**Error:**"),
+    warning: extractColor("**Warning:**"),
+    background: extractColor("**Background:**"),
+    surface: extractColor("**Surface:**"),
+    textPrimary: extractColor("**Primary Text:**"),
+    textSecondary: extractColor("**Secondary Text:**")
   };
   
   // Extract font information
-  const typographyLine = lines.find(line => line.includes('Typography:'));
+  const typographyLine = lines.find(line => line.includes("Typography:"));
   const fontMatch = typographyLine ? typographyLine.match(/Typography: (.+)/) : null;
-  const fontPairing = fontMatch ? fontMatch[1].trim() : 'Inter + Inter';
+  const fontPairing = fontMatch ? fontMatch[1].trim() : "Inter + Inter";
   
   // Parse font details
-  const headingLine = lines.find(line => line.includes('**Headings:**'));
-  const bodyLine = lines.find(line => line.includes('**Body:**'));
+  const headingLine = lines.find(line => line.includes("**Headings:**"));
+  const bodyLine = lines.find(line => line.includes("**Body:**"));
   
-  const headingFont = headingLine ? headingLine.match(/\*\*Headings:\*\* (.+?) \d+/)?.[1] || 'Inter' : 'Inter';
-  const bodyFont = bodyLine ? bodyLine.match(/\*\*Body:\*\* (.+?) \d+/)?.[1] || 'Inter' : 'Inter';
-  const headingWeight = headingLine ? headingLine.match(/(\d+)$/)?.[1] || '600' : '600';
-  const bodyWeight = bodyLine ? bodyLine.match(/(\d+)$/)?.[1] || '400' : '400';
+  const headingFont = headingLine ? headingLine.match(/\*\*Headings:\*\* (.+?) \d+/)?.[1] || "Inter" : "Inter";
+  const bodyFont = bodyLine ? bodyLine.match(/\*\*Body:\*\* (.+?) \d+/)?.[1] || "Inter" : "Inter";
+  const headingWeight = headingLine ? headingLine.match(/(\d+)$/)?.[1] || "600" : "600";
+  const bodyWeight = bodyLine ? bodyLine.match(/(\d+)$/)?.[1] || "400" : "400";
   
   // Extract spacing info
-  const spacingLine = lines.find(line => line.includes('Scale:'));
-  const spacingType = spacingLine ? spacingLine.replace('### Scale: ', '').trim() : 'Balanced';
+  const spacingLine = lines.find(line => line.includes("Scale:"));
+  const spacingType = spacingLine ? spacingLine.replace("### Scale: ", "").trim() : "Balanced";
   
   // Extract radius info
-  const radiusLine = lines.find(line => line.includes('--radius:'));
+  const radiusLine = lines.find(line => line.includes("--radius:"));
   const radiusMatch = radiusLine ? radiusLine.match(/--radius: ([0-9.]+)/) : null;
-  const radius = radiusMatch ? radiusMatch[1] : '0.5';
+  const radius = radiusMatch ? radiusMatch[1] : "0.5";
   
   return {
     themeName,
@@ -78,13 +78,13 @@ function parseDesignSystem(designSystemContent) {
 
 function extractOklchFromDesignSystem(content) {
   // Extract OKLCH values that are already generated in DESIGN_SYSTEM.md
-  const lines = content.split('\n');
+  const lines = content.split("\n");
   const oklchVars = {};
   
   // Find CSS variables section
-  const cssStart = content.indexOf(':root {');
+  const cssStart = content.indexOf(":root {");
   if (cssStart !== -1) {
-    const cssEnd = content.indexOf('}', cssStart);
+    const cssEnd = content.indexOf("}", cssStart);
     const cssSection = content.substring(cssStart, cssEnd);
     
     // Extract all --variable: value pairs
@@ -109,45 +109,45 @@ function generateGlobalsCss(designSystem, oklchVars) {
 @layer base {
   :root {
     /* Core theme colors */
-    --background: ${getVar('background', '1 0 0')};
-    --foreground: ${getVar('foreground', '0.1 0 0')};
+    --background: ${getVar("background", "1 0 0")};
+    --foreground: ${getVar("foreground", "0.1 0 0")};
     
     /* Component backgrounds */
-    --card: ${getVar('card', '1 0 0')};
-    --card-foreground: ${getVar('card-foreground', '0.1 0 0')};
-    --popover: ${getVar('popover', '1 0 0')};
-    --popover-foreground: ${getVar('popover-foreground', '0.1 0 0')};
+    --card: ${getVar("card", "1 0 0")};
+    --card-foreground: ${getVar("card-foreground", "0.1 0 0")};
+    --popover: ${getVar("popover", "1 0 0")};
+    --popover-foreground: ${getVar("popover-foreground", "0.1 0 0")};
     
     /* Interactive elements */
-    --primary: ${getVar('primary', '0.5 0.2 250')};
-    --primary-foreground: ${getVar('primary-foreground', '1 0 0')};
-    --secondary: ${getVar('secondary', '0.95 0.02 250')};
-    --secondary-foreground: ${getVar('secondary-foreground', '0.1 0 0')};
+    --primary: ${getVar("primary", "0.5 0.2 250")};
+    --primary-foreground: ${getVar("primary-foreground", "1 0 0")};
+    --secondary: ${getVar("secondary", "0.95 0.02 250")};
+    --secondary-foreground: ${getVar("secondary-foreground", "0.1 0 0")};
     
     /* Muted and accent states */
-    --muted: ${getVar('muted', '0.95 0.02 250')};
-    --muted-foreground: ${getVar('muted-foreground', '0.45 0.02 250')};
-    --accent: ${getVar('accent', '0.95 0.02 250')};
-    --accent-foreground: ${getVar('accent-foreground', '0.1 0 0')};
+    --muted: ${getVar("muted", "0.95 0.02 250")};
+    --muted-foreground: ${getVar("muted-foreground", "0.45 0.02 250")};
+    --accent: ${getVar("accent", "0.95 0.02 250")};
+    --accent-foreground: ${getVar("accent-foreground", "0.1 0 0")};
     
     /* State colors */
-    --destructive: ${getVar('destructive', '0.6 0.2 20')};
-    --destructive-foreground: ${getVar('destructive-foreground', '1 0 0')};
+    --destructive: ${getVar("destructive", "0.6 0.2 20")};
+    --destructive-foreground: ${getVar("destructive-foreground", "1 0 0")};
     
     /* Form and border elements */
-    --border: ${getVar('border', '0.9 0.02 250')};
-    --input: ${getVar('input', '0.9 0.02 250')};
-    --ring: ${getVar('ring', '0.5 0.1 250')};
+    --border: ${getVar("border", "0.9 0.02 250")};
+    --input: ${getVar("input", "0.9 0.02 250")};
+    --ring: ${getVar("ring", "0.5 0.1 250")};
     
     /* Border radius */
     --radius: ${designSystem.radius}rem;
     
     /* Legacy colors for custom components */
-    --success: ${getVar('success', '0.6 0.2 120')};
-    --warning: ${getVar('warning', '0.7 0.2 60')};
-    --surface: ${getVar('surface', '0.98 0.02 250')};
-    --text-primary: ${getVar('text-primary', '0.1 0 0')};
-    --text-secondary: ${getVar('text-secondary', '0.45 0.02 250')};
+    --success: ${getVar("success", "0.6 0.2 120")};
+    --warning: ${getVar("warning", "0.7 0.2 60")};
+    --surface: ${getVar("surface", "0.98 0.02 250")};
+    --text-primary: ${getVar("text-primary", "0.1 0 0")};
+    --text-secondary: ${getVar("text-secondary", "0.45 0.02 250")};
   }
   
   @media (prefers-color-scheme: dark) {
@@ -158,7 +158,7 @@ function generateGlobalsCss(designSystem, oklchVars) {
       --card-foreground: 0.985 0 0;
       --popover: 0.205 0 0;
       --popover-foreground: 0.985 0 0;
-      --primary: ${oklchVars['primary-dark'] || '0.7 0.2 250'};
+      --primary: ${oklchVars["primary-dark"] || "0.7 0.2 250"};
       --primary-foreground: 0.145 0 0;
       --secondary: 0.269 0 0;
       --secondary-foreground: 0.985 0 0;
@@ -166,15 +166,15 @@ function generateGlobalsCss(designSystem, oklchVars) {
       --muted-foreground: 0.708 0 0;
       --accent: 0.269 0 0;
       --accent-foreground: 0.985 0 0;
-      --destructive: ${oklchVars['destructive-dark'] || '0.7 0.2 20'};
+      --destructive: ${oklchVars["destructive-dark"] || "0.7 0.2 20"};
       --destructive-foreground: 0.985 0 0;
       --border: 1 0 0 / 10%;
       --input: 0.269 0 0;
-      --ring: ${oklchVars['ring-dark'] || '0.8 0.2 250'};
+      --ring: ${oklchVars["ring-dark"] || "0.8 0.2 250"};
       
       /* Legacy colors for dark mode */
-      --success: ${oklchVars['success-dark'] || '0.7 0.2 120'};
-      --warning: ${oklchVars['warning-dark'] || '0.8 0.2 60'};
+      --success: ${oklchVars["success-dark"] || "0.7 0.2 120"};
+      --warning: ${oklchVars["warning-dark"] || "0.8 0.2 60"};
       --surface: 0.269 0 0;
       --text-primary: 0.985 0 0;
       --text-secondary: 0.708 0 0;
@@ -274,13 +274,13 @@ module.exports = {
 function generateLayoutTsx(designSystem) {
   // Convert font names to Next.js import names
   const getNextFontName = (fontName) => {
-    return fontName.replace(/\s+/g, '_');
+    return fontName.replace(/\s+/g, "_");
   };
   
   const headingImport = getNextFontName(designSystem.fonts.heading);
   const bodyImport = getNextFontName(designSystem.fonts.body);
   
-  return `import { ${headingImport}${headingImport !== bodyImport ? ', ' + bodyImport : ''} } from 'next/font/google'
+  return `import { ${headingImport}${headingImport !== bodyImport ? ", " + bodyImport : ""} } from 'next/font/google'
 import './globals.css'
 
 const headingFont = ${headingImport}({
@@ -347,33 +347,33 @@ function generateComponentsJson() {
 function setupFoundation() {
   try {
     // Step 1: Read and parse DESIGN_SYSTEM.md
-    const designSystemPath = path.join(process.cwd(), 'DESIGN_SYSTEM.md');
+    const designSystemPath = path.join(process.cwd(), "DESIGN_SYSTEM.md");
     if (!fs.existsSync(designSystemPath)) {
-      throw new Error('DESIGN_SYSTEM.md not found. Please run /1-setup-design first.');
+      throw new Error("DESIGN_SYSTEM.md not found. Please run /1-setup-design first.");
     }
     
-    const designSystemContent = fs.readFileSync(designSystemPath, 'utf8');
+    const designSystemContent = fs.readFileSync(designSystemPath, "utf8");
     const designSystem = parseDesignSystem(designSystemContent);
     const oklchVars = extractOklchFromDesignSystem(designSystemContent);
     
     // Step 2: Initialize shadcn/ui
-    console.log('Initializing shadcn/ui...');
+    console.log("Initializing shadcn/ui...");
     try {
-      execSync('npx shadcn@latest init --yes --defaults', { 
-        stdio: 'pipe',
+      execSync("npx shadcn@latest init --yes --defaults", { 
+        stdio: "pipe",
         cwd: process.cwd() 
       });
     } catch (shadcnError) {
-      console.log('Note: shadcn init may have failed, but continuing with file generation...');
+      console.log("Note: shadcn init may have failed, but continuing with file generation...");
     }
     
     // Step 3: Generate all configuration files
     const files = {
-      'src/app/globals.css': generateGlobalsCss(designSystem, oklchVars),
-      'tailwind.config.js': generateTailwindConfig(designSystem),
-      'src/app/layout.tsx': generateLayoutTsx(designSystem),
-      'src/lib/utils.ts': generateUtils(),
-      'components.json': generateComponentsJson()
+      "src/app/globals.css": generateGlobalsCss(designSystem, oklchVars),
+      "tailwind.config.js": generateTailwindConfig(designSystem),
+      "src/app/layout.tsx": generateLayoutTsx(designSystem),
+      "src/lib/utils.ts": generateUtils(),
+      "components.json": generateComponentsJson()
     };
     
     // Step 4: Ensure directories exist and write files
@@ -388,7 +388,7 @@ function setupFoundation() {
       }
       
       // Write file
-      fs.writeFileSync(fullPath, content, 'utf8');
+      fs.writeFileSync(fullPath, content, "utf8");
       results.push(filePath);
     });
     
@@ -409,11 +409,11 @@ function setupFoundation() {
 }
 
 // Export for Node.js usage
-if (typeof module !== 'undefined' && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
   module.exports = { setupFoundation };
 }
 
 // Export for browser usage  
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   window.setupFoundation = setupFoundation;
 }

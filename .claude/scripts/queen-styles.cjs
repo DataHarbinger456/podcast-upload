@@ -1,40 +1,40 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 // Fast exit if not a TSX file
 const filePath = process.argv[2];
 const toolUsed = process.argv[3];
 
-if (!filePath || !filePath.endsWith('.tsx')) {
+if (!filePath || !filePath.endsWith(".tsx")) {
   process.exit(0);
 }
 
 // Only check Edit, Write, MultiEdit operations
-if (!toolUsed || !['Edit', 'Write', 'MultiEdit'].includes(toolUsed)) {
+if (!toolUsed || !["Edit", "Write", "MultiEdit"].includes(toolUsed)) {
   process.exit(0);
 }
 
 try {
-  const content = fs.readFileSync(filePath, 'utf8');
-  const lines = content.split('\n');
+  const content = fs.readFileSync(filePath, "utf8");
+  const lines = content.split("\n");
   
   // Track violations with line numbers
   const violations = [];
   
   // Pattern definitions with descriptions
   const customPatterns = [
-    { pattern: /className="[^"]*bg-gradient-/, desc: 'Custom gradient', suggestion: 'Use bg-primary, bg-success, etc.' },
-    { pattern: /className="[^"]*transform\s+[^"]*scale-/, desc: 'Custom transform scale', suggestion: 'Avoid custom transforms' },
-    { pattern: /className="[^"]*rotate-/, desc: 'Custom rotation', suggestion: 'Use simple hover effects' },
-    { pattern: /className="[^"]*bg-(red|blue|green|yellow|purple|pink|indigo|gray)-\d{3}/, desc: 'Raw Tailwind color', suggestion: 'Use bg-primary, bg-success, bg-error, bg-warning' },
-    { pattern: /className="[^"]*text-(red|blue|green|yellow|purple|pink|indigo|gray)-\d{3}/, desc: 'Raw Tailwind text color', suggestion: 'Use text-text-primary, text-text-secondary' },
-    { pattern: /className="[^"]*p-[1-9]\d+/, desc: 'Custom padding', suggestion: 'Use ds-1, ds-2, ds-3, ds-4, ds-5, ds-6' },
-    { pattern: /className="[^"]*m-[1-9]\d+/, desc: 'Custom margin', suggestion: 'Use ds-1, ds-2, ds-3, ds-4, ds-5, ds-6' },
-    { pattern: /className="[^"]*shadow-(2xl|inner)/, desc: 'Custom shadow', suggestion: 'Use shadow-sm, shadow-md, shadow-lg' },
-    { pattern: /className="[^"]*ring-\d+/, desc: 'Custom ring', suggestion: 'Use focus:border-primary focus:ring-2 focus:ring-primary/20' },
-    { pattern: /className="[^"]*rounded-[2-9]\d*xl/, desc: 'Custom border radius', suggestion: 'Use rounded-ds-sm, rounded-ds-md, rounded-ds-lg' },
+    { pattern: /className="[^"]*bg-gradient-/, desc: "Custom gradient", suggestion: "Use bg-primary, bg-success, etc." },
+    { pattern: /className="[^"]*transform\s+[^"]*scale-/, desc: "Custom transform scale", suggestion: "Avoid custom transforms" },
+    { pattern: /className="[^"]*rotate-/, desc: "Custom rotation", suggestion: "Use simple hover effects" },
+    { pattern: /className="[^"]*bg-(red|blue|green|yellow|purple|pink|indigo|gray)-\d{3}/, desc: "Raw Tailwind color", suggestion: "Use bg-primary, bg-success, bg-error, bg-warning" },
+    { pattern: /className="[^"]*text-(red|blue|green|yellow|purple|pink|indigo|gray)-\d{3}/, desc: "Raw Tailwind text color", suggestion: "Use text-text-primary, text-text-secondary" },
+    { pattern: /className="[^"]*p-[1-9]\d+/, desc: "Custom padding", suggestion: "Use ds-1, ds-2, ds-3, ds-4, ds-5, ds-6" },
+    { pattern: /className="[^"]*m-[1-9]\d+/, desc: "Custom margin", suggestion: "Use ds-1, ds-2, ds-3, ds-4, ds-5, ds-6" },
+    { pattern: /className="[^"]*shadow-(2xl|inner)/, desc: "Custom shadow", suggestion: "Use shadow-sm, shadow-md, shadow-lg" },
+    { pattern: /className="[^"]*ring-\d+/, desc: "Custom ring", suggestion: "Use focus:border-primary focus:ring-2 focus:ring-primary/20" },
+    { pattern: /className="[^"]*rounded-[2-9]\d*xl/, desc: "Custom border radius", suggestion: "Use rounded-ds-sm, rounded-ds-md, rounded-ds-lg" },
   ];
   
   // Track string/template literal context to avoid false positives
@@ -47,15 +47,15 @@ try {
     const trimmedLine = line.trim();
     
     // Skip comment lines
-    if (trimmedLine.startsWith('//') || 
-        trimmedLine.startsWith('/*') || 
-        trimmedLine.startsWith('*') ||
-        trimmedLine.startsWith('*/')) {
+    if (trimmedLine.startsWith("//") || 
+        trimmedLine.startsWith("/*") || 
+        trimmedLine.startsWith("*") ||
+        trimmedLine.startsWith("*/")) {
       return;
     }
     
     // Track template string state
-    if (trimmedLine.includes('`')) {
+    if (trimmedLine.includes("`")) {
       inTemplateString = !inTemplateString;
     }
     
@@ -98,10 +98,10 @@ try {
     const trimmedLine = line.trim();
     
     // Skip comment lines
-    if (trimmedLine.startsWith('//') || 
-        trimmedLine.startsWith('/*') || 
-        trimmedLine.startsWith('*') ||
-        trimmedLine.startsWith('*/')) {
+    if (trimmedLine.startsWith("//") || 
+        trimmedLine.startsWith("/*") || 
+        trimmedLine.startsWith("*") ||
+        trimmedLine.startsWith("*/")) {
       return;
     }
     
@@ -122,17 +122,17 @@ try {
       const classes = match[1];
       
       // If button has custom styling but no design system tokens
-      if ((classes.includes('bg-') || classes.includes('border-')) && 
-          !classes.includes('bg-primary') && 
-          !classes.includes('bg-success') && 
-          !classes.includes('bg-error') &&
-          !classes.includes('bg-warning')) {
+      if ((classes.includes("bg-") || classes.includes("border-")) && 
+          !classes.includes("bg-primary") && 
+          !classes.includes("bg-success") && 
+          !classes.includes("bg-error") &&
+          !classes.includes("bg-warning")) {
         
         violations.push({
           line: lineNumber,
           content: line.trim(),
-          violation: 'Custom button implementation',
-          suggestion: 'Use button templates from COMPONENT_TEMPLATES.md'
+          violation: "Custom button implementation",
+          suggestion: "Use button templates from COMPONENT_TEMPLATES.md"
         });
       }
     }
@@ -144,17 +144,17 @@ try {
     const fileName = filePath.split(/[/\\]/).pop() || filePath;
     console.error(`❌ Design system violations in ${fileName}:`);
     console.error(`📁 File: ${filePath}`);
-    console.error('');
+    console.error("");
     
     violations.forEach(violation => {
       console.error(`🚨 Line ${violation.line}: ${violation.violation}`);
       console.error(`   ${violation.content}`);
       console.error(`💡 ${violation.suggestion}`);
-      console.error('');
+      console.error("");
     });
     
-    console.error(`📖 Reference: COMPONENT_TEMPLATES.md`);
-    console.error(`🎨 Colors: DESIGN_SYSTEM.md`);
+    console.error("📖 Reference: COMPONENT_TEMPLATES.md");
+    console.error("🎨 Colors: DESIGN_SYSTEM.md");
     process.exit(2);
   }
   

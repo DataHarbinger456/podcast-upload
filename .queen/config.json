@@ -1,0 +1,23 @@
+{
+  "project": {
+    "initialized": "2025-09-30T04:12:27.846Z"
+  },
+  "database": {
+    "path": "database.db",
+    "type": "sqlite"
+  },
+  "agents": {
+    "max_concurrent": 3,
+    "default_agent": "claude",
+    "session_timeout": 3600000
+  },
+  "git": {
+    "worktree_base": ".queen/worktrees",
+    "branch_prefix": "",
+    "auto_cleanup": true
+  },
+  "logging": {
+    "level": "info",
+    "path": "logs"
+  }
+}
